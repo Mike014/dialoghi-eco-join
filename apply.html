@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dialoghi con un’Eco — Team Application (EN)</title>
+  <style>
+    :root { --w: 820px; }
+    html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:#0b0d10;color:#e7eaee;}
+    a{color:#a7c7ff;text-decoration:underline;}
+    header{max-width:var(--w);margin:40px auto 16px;padding:0 16px}
+    main{max-width:var(--w);margin:0 auto 80px;padding:0 16px}
+    .card{background:#12151a;border:1px solid #232b36;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 1px 0 rgba(255,255,255,.05),0 12px 32px rgba(0,0,0,.3)}
+    h1{font-size:28px;margin:0 0 6px}
+    h2{font-size:20px;margin:16px 0 8px}
+    h3{font-size:16px;margin:8px 0 6px;color:#c7d0db}
+    .muted{color:#a8b2bf;font-size:14px}
+    .warn{background:#1a1414;border-color:#402020}
+    .grid{display:grid;gap:12px}
+    @media(min-width:720px){.grid-cols-2{grid-template-columns:1fr 1fr}}
+    label{display:block;font-weight:600;margin:8px 0 4px}
+    input[type=text],input[type=email],input[type=url],textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3542;background:#0f1216;color:#e7eaee}
+    textarea{min-height:120px}
+    .row{display:flex;gap:12px;align-items:center}
+    .row input[type=checkbox], .row input[type=radio]{transform:scale(1.15)}
+    .btnbar{display:flex;gap:12px;flex-wrap:wrap}
+    button{appearance:none;border:none;background:#2b5cff;color:white;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
+    button.secondary{background:#2a3542;color:#e7eaee}
+    button:disabled{background:#1a2a4a;color:#6b7b95;cursor:not-allowed}
+    .req{color:#7fb3ff;font-weight:600}
+    .right{float:right}
+    .small{font-size:13px;color:#97a4b3}
+    .note{font-size:13px;color:#b8c3d0}
+    .hidden{display:none}
+    .divider{height:1px;background:#263140;margin:20px 0}
+    .score{font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dialoghi con un’Eco — Team Application</h1>
+    <p class="muted">Selective intake for 1–2 pioneers. The format itself is part of the test.</p>
+  </header>
+
+  <main>
+    <!-- Submits straight to your Formspree endpoint -->
+    <form id="eco-form" name="eco-application" method="POST" action="https://formspree.io/f/mdkwyezk">
+      <input type="hidden" name="form-name" value="eco-application" />
+      <input type="hidden" id="fit_score" name="fit_score" value="0" />
+      <input type="hidden" id="fit_breakdown" name="fit_breakdown" value="" />
+      <input type="hidden" id="completion_time" name="completion_time" value="0" />
+      <!-- Email helpers for Formspree -->
+      <input type="hidden" id="_subject" name="_subject" value="Eco Application — pending score" />
+      <input type="hidden" name="_replyto" value="no-reply@dialoghiconuneco" />
+      <!-- Honeypot anti-bot -->
+      <p class="hidden">
+        <label>Leave this field empty: <input name="_hp" /></label>
+      </p>
+
+      <section class="grid grid-cols-2">
+        <p>
+          <label>Full name <span class="req">*</span></label>
+          <input required type="text" name="full_name" autocomplete="name" />
+        </p>
+        <p>
+          <label>Email <span class="req">*</span></label>
+          <input required type="email" name="email" autocomplete="email" />
+        </p>
+        <p>
+          <label>Portfolio / GitHub</label>
+          <input type="url" name="portfolio" placeholder="https://…" />
+        </p>
+        <p>
+          <label>LinkedIn</label>
+          <input type="url" name="linkedin" placeholder="https://…" />
+        </p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>0) Informed consent</h2>
+        <p class="note">This project explores mature themes and simulated psychological pressure. Confirm you have read the content warnings on the pitch.</p>
+        <div class="row">
+          <input id="cw_ack" name="cw_ack" type="checkbox" required />
+          <label for="cw_ack">I have read and understood the content warnings. I am 18+.</label>
+        </div>
+        <div class="row">
+          <input id="gdpr_ack" name="gdpr_ack" type="checkbox" required />
+          <label for="gdpr_ack">I consent to processing the data I provide for selection and contact purposes.</label>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>1) Vision alignment</h2>
+        <label for="q1">1. What does “silence as mechanic” mean to you in a narrative context? <span class="req">(min 200)</span></label>
+        <textarea id="q1" name="q1" minlength="200" required placeholder="Talk about tension, agency, rhythm, metanarrative timing, etc."></textarea>
+
+        <label class="block">2. Why use an agentic AI instead of scripted dialogue? (check all that apply)</label>
+        <div class="grid grid-cols-2">
+          <label class="row"><input type="checkbox" name="q2[]" value="narrative_emergence"> Narrative emergence</label>
+          <label class="row"><input type="checkbox" name="q2[]" value="player_adaptation"> Player adaptation</label>
+          <label class="row"><input type="checkbox" name="q2[]" value="thematic_exploration"> Thematic exploration</label>
+          <label class="row"><input type="checkbox" name="q2[]" value="other"> Other</label>
+        </div>
+
+        <!-- Q3 replaced with Likert -->
+        <div class="card" style="margin-top:12px">
+          <h3>3. How relevant should a <em>traditional gameplay loop</em> be for this project?</h3>
+          <p class="small">Lower is better for alignment (we prioritize non-traditional loops).</p>
+          <div class="row">
+            <label class="row"><input type="radio" name="q3_likert" value="1" required> 1 — Not relevant</label>
+            <label class="row"><input type="radio" name="q3_likert" value="2"> 2 — Low</label>
+            <label class="row"><input type="radio" name="q3_likert" value="3"> 3 — Moderate</label>
+            <label class="row"><input type="radio" name="q3_likert" value="4"> 4 — High</label>
+            <label class="row"><input type="radio" name="q3_likert" value="5"> 5 — Critical</label>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>2) Technical comprehension</h2>
+        <label for="q4">4. If ENTITÀ must “remember” interactions, how would you design memory? (schema, limits, safety)</label>
+        <textarea id="q4" name="q4" placeholder="Architecture: buffers, EMA, summaries, hard/soft memory, controls, etc." required></textarea>
+
+        <label for="q5">5. OS integration: what can go wrong and how do you prevent it? (sandbox, fallbacks, safe-mode)</label>
+        <textarea id="q5" name="q5" required></textarea>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- NEW: Core AI concepts (quick check) -->
+      <section class="card">
+        <h2>2b) Core AI concepts (quick check)</h2>
+
+        <h3>6. Do you know what an AI agent is?</h3>
+        <div class="row">
+          <label class="row"><input type="radio" name="ai_agent_known" value="yes" required> Yes</label>
+          <label class="row"><input type="radio" name="ai_agent_known" value="no"> No</label>
+        </div>
+        <label class="small" for="ai_agent_def">If yes, define it in 1–2 sentences (optional):</label>
+        <textarea id="ai_agent_def" name="ai_agent_def" placeholder="E.g., goal-driven system that perceives, decides, and acts via tools/policies…"></textarea>
+
+        <h3 style="margin-top:12px">7. Do you know what the ReAct framework is?</h3>
+        <div class="row">
+          <label class="row"><input type="radio" name="react_known" value="yes" required> Yes</label>
+          <label class="row"><input type="radio" name="react_known" value="no"> No</label>
+        </div>
+        <label class="small" for="react_def">If yes, summarize in 1–2 sentences (optional):</label>
+        <textarea id="react_def" name="react_def" placeholder="E.g., Reason+Act prompting loop enabling tool use with explicit chain-of-thought and actions…"></textarea>
+
+        <h3 style="margin-top:12px">8. Do you know what “thinking” refers to in modern LLMs?</h3>
+        <div class="row">
+          <label class="row"><input type="radio" name="thinking_known" value="yes" required> Yes</label>
+          <label class="row"><input type="radio" name="thinking_known" value="no"> No</label>
+        </div>
+        <label class="small" for="thinking_def">If yes, describe briefly (optional):</label>
+        <textarea id="thinking_def" name="thinking_def" placeholder="E.g., deliberate reasoning traces/steps used to plan before answering…"></textarea>
+
+        <p class="small" style="margin-top:6px">Note: these answers do not affect your fit score (for now); they help us tailor the interview.</p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>3) Practical ethics</h2>
+        <p>9. The experience goes deep into psychological themes. What are your ethical boundaries?</p>
+        <label class="row"><input type="checkbox" name="q6[]" value="not_clinical"> Not therapy / not clinical</label>
+        <label class="row"><input type="checkbox" name="q6[]" value="informed_consent"> Informed consent & clear opt-out</label>
+        <label class="row"><input type="checkbox" name="q6[]" value="safety_testing"> Safety testing & escalation path</label>
+        <label class="row"><input type="checkbox" name="q6[]" value="other"> Other (describe)</label>
+        <label for="q6_extra" class="hidden">Other:</label>
+        <textarea id="q6_extra" name="q6_extra" placeholder="Add clarifications on your ethical boundaries"></textarea>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>4) Role, availability & compensation</h2>
+        <label>Interested roles</label>
+        <div class="grid grid-cols-2">
+          <label class="row"><input type="checkbox" name="role[]" value="ai_engineer"> AI / Systems Engineer</label>
+          <label class="row"><input type="checkbox" name="role[]" value="unity_csharp"> Unity / C# Developer</label>
+          <label class="row"><input type="checkbox" name="role[]" value="narrative_design"> Narrative / Story Architect</label>
+          <label class="row"><input type="checkbox" name="role[]" value="game_audio"> Game Audio / Sound</label>
+          <label class="row"><input type="checkbox" name="role[]" value="ops_security"> Ops / Build / Security</label>
+          <label class="row"><input type="checkbox" name="role[]" value="art_direction"> Art / UX Direction</label>
+        </div>
+        <label for="availability">Availability (hours/week, timezone, constraints)</label>
+        <input id="availability" name="availability" type="text" placeholder="e.g., 4–10h/week, CET, Fridays preferred" />
+
+        <div class="card warn">
+          <h3>Compensation Policy (read carefully)</h3>
+          <p class="small">This is a paid collaboration directed and funded personally by Michele Grimaldi. It is <strong>not volunteer work</strong>. The current model is modest but clear: we may agree on <strong>one focused workday per week</strong> (or similar). That day is paid a small stipend (for example <strong>€10–€20 per agreed workday</strong>), adjusted case-by-case and subject to mutual agreement. Scope must stay aligned with the project’s priorities and study plan. As resources grow, rates can be revised. Payment method and schedule are defined directly with Michele after passing the form and a short call.</p>
+          <label class="row"><input type="checkbox" name="comp_ack" required> I understand and accept the compensation policy described above.</label>
+        </div>
+
+        <label for="compensation">Optional — your expected range</label>
+        <input id="compensation" name="compensation" type="text" placeholder="e.g., €X per focused workday" />
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="card">
+        <h2>5) Commitment to learning</h2>
+        <p class="small">To work on this project you must be willing to <strong>study continuously</strong> to keep pace with the technology and design research: papers (e.g., <em>arXiv</em>), docs, RFCs, OS manuals, Unity/C# references, AI/ML notes, ethics guidelines. Learning is part of the job.</p>
+        <label class="row"><input type="checkbox" name="learn_ack" required> I am willing to study materials regularly (including arXiv and official docs) and keep up with the project’s learning track.</label>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="warn card">
+        <h2>IP, License & Copyright</h2>
+        <p class="small">The project is <strong>proprietary</strong> and protected by <strong>Copyright</strong> and a <strong>License</strong> as described in the repository README. No public forks, leaks, or derivative works without written permission. You may be asked to sign an NDA.</p>
+        <label class="row"><input type="checkbox" name="nda_ready" value="yes"> I am willing to sign an NDA if requested.</label>
+      </section>
+
+      <div class="divider"></div>
+
+      <div class="btnbar">
+        <button type="button" class="secondary" id="previewBtn">Preview score</button>
+        <button type="submit" id="submitBtn">Submit application</button>
+        <span class="small right">The score is an indicator; final decisions are discretionary.</span>
+      </div>
+
+      <p id="scoreOut" class="small score"></p>
+    </form>
+
+    <section class="card">
+      <h2>Privacy notice (short)</h2>
+      <p class="small">Controller: Michele Grimaldi. Purpose: evaluating applications and contacting candidates. Legal basis: consent. Retention: max 12 months. Rights: access, rectification, erasure, restriction, portability, objection. Requests: mikgrimaldi7@gmail.com.</p>
+    </section>
+  </main>
+
+  <script>
+    // Track start time
+    const startTime = Date.now();
+
+    // ---- Scoring helpers ----
+    function containsConcepts(text, concepts){
+      const t = (text||"").toLowerCase();
+      return concepts.reduce((acc,c)=> acc + (t.includes(c)?1:0), 0);
+    }
+
+    function calcScore(){
+      const q1 = document.getElementById('q1').value || "";
+      const q4 = document.getElementById('q4').value || "";
+      const q5 = document.getElementById('q5').value || "";
+      const q6_extra = document.getElementById('q6_extra').value || "";
+      const q3Likert = Number((document.querySelector('input[name="q3_likert"]:checked')||{}).value || 0);
+
+      let score = 0; 
+      let breakdown = [];
+
+      // Vision (Q1) — up to 25
+      const conceptHits = containsConcepts(q1,["tension","agency","rhythm","tempo","metanarrative","silence"]);
+      if (q1.trim().length >= 200) {
+        const s = Math.min(25, 10 + conceptHits * 3);
+        score += s; breakdown.push(`Vision Q1: +${s}`);
+      }
+
+      // Vision (Q3 Likert) — prefer low relevance for traditional loop
+      // 1->+25, 2->+20, 3->+12, 4->+8, 5->+5
+      const likertMap = {1:25, 2:20, 3:12, 4:8, 5:5};
+      const s3 = likertMap[q3Likert] || 0;
+      score += s3; breakdown.push(`Vision Q3 (Likert): +${s3}`);
+
+      // Systems thinking (Q4/Q5) — up to 30 (15+15)
+      const q4hits = containsConcepts(q4,["buffer","ema","hysteresis","summary","token","privacy","retention","consistency","rate","cooldown","safety"]);
+      const s4 = Math.min(15, 6 + q4hits);
+      score += s4; breakdown.push(`Tech Q4: +${s4}`);
+
+      const q5hits = containsConcepts(q5,["sandbox","fallback","safe","permission","os","dpi","resolution","threat","abuse","mitigation","logging"]);
+      const s5 = Math.min(15, 6 + q5hits);
+      score += s5; breakdown.push(`Tech Q5: +${s5}`);
+
+      // Ethics (Q6 extra) — up to 20
+      const eHits = containsConcepts(q6_extra,["consent","opt-out","support","escalation","trigger","responsible","ethics","gdpr"]);
+      const s6 = Math.min(20, 8 + eHits);
+      score += s6; breakdown.push(`Ethics Q6: +${s6}`);
+
+      return { score: Math.round(score), breakdown: breakdown.join(' | ') };
+    }
+
+    function updateHidden(){
+      const {score, breakdown} = calcScore();
+      document.getElementById('fit_score').value = String(score);
+      document.getElementById('fit_breakdown').value = breakdown;
+
+      // Update completion time
+      const completionTime = Math.round((Date.now() - startTime) / 1000);
+      document.getElementById('completion_time').value = completionTime;
+
+      return {score, breakdown, completionTime};
+    }
+
+    // ---- UI events ----
+    document.getElementById('previewBtn').addEventListener('click', function(){
+      const {score, breakdown, completionTime} = updateHidden();
+      document.getElementById('scoreOut').textContent =
+        `Estimated fit: ${score}/100 — ${breakdown} — Time: ${completionTime}s`;
+    });
+
+    document.getElementById('eco-form').addEventListener('submit', function(){
+      const {score} = updateHidden();
+      const name = (document.querySelector('input[name="full_name"]').value || 'Candidate').trim();
+      document.getElementById('_subject').value = `Eco Application — ${name} — score ${score}`;
+      // UX nicety
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'Submitting...';
+      setTimeout(()=>{ btn.disabled = false; btn.textContent = 'Submit application'; }, 3000);
+    });
+
+    // Toggle Q6 "Other" textarea
+    const q6extra = document.getElementById('q6_extra');
+    document.querySelectorAll('input[name="q6[]"]').forEach(cb=>{
+      cb.addEventListener('change',()=>{
+        const checked = document.querySelector('input[name="q6[]"][value="other"]').checked;
+        q6extra.parentElement.classList.toggle('hidden', !checked);
+        if (checked) q6extra.setAttribute('required','required');
+        else q6extra.removeAttribute('required');
+      });
+    });
+  </script>
+</body>
+</html>
+
