@@ -5,50 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dialoghi con un’Eco — Team Application (EN)</title>
   <style>
-    :root { --w: 820px; }
-    html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:#0b0d10;color:#e7eaee;}
-    a{color:#a7c7ff;text-decoration:underline;}
-    header{max-width:var(--w);margin:40px auto 16px;padding:0 16px}
-    main{max-width:var(--w);margin:0 auto 80px;padding:0 16px}
-    .card{background:#12151a;border:1px solid #232b36;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 1px 0 rgba(255,255,255,.05),0 12px 32px rgba(0,0,0,.3)}
-    h1{font-size:28px;margin:0 0 6px}
-    h2{font-size:20px;margin:16px 0 8px}
-    h3{font-size:16px;margin:8px 0 6px;color:#c7d0db}
+    /* --- Base & Reset --- */
+    *,*::before,*::after{box-sizing:border-box}
+    :root{
+      /* fluid container width with an upper bound */
+      --container-max: 820px;
+      --spacing: 16px;
+    }
+    html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;background:#0b0d10;color:#e7eaee;-webkit-text-size-adjust:100%}
+    a{color:#a7c7ff;text-decoration:underline}
+
+    /* Containers */
+    .container{width:min(100%, var(--container-max));margin-inline:auto;padding-inline:16px}
+    header.container{margin-top:40px;margin-bottom:16px}
+    main.container{margin-bottom:80px}
+
+    /* Typography */
+    h1{font-size:clamp(22px, 4.2vw, 28px);margin:0 0 6px}
+    h2{font-size:clamp(18px, 3.4vw, 20px);margin:16px 0 8px}
+    h3{font-size:clamp(15px, 3vw, 16px);margin:8px 0 6px;color:#c7d0db}
+    .center{text-align:center}
     .muted{color:#a8b2bf;font-size:14px}
-    .warn{background:#1a1414;border-color:#402020}
-    .grid{display:grid;gap:12px}
-    @media(min-width:720px){.grid-cols-2{grid-template-columns:1fr 1fr}}
-    label{display:block;font-weight:600;margin:8px 0 4px}
-    input[type=text],input[type=email],input[type=url],textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #2a3542;background:#0f1216;color:#e7eaee}
-    textarea{min-height:120px}
-    .row{display:flex;gap:12px;align-items:center}
-    .row input[type=checkbox], .row input[type=radio]{transform:scale(1.15)}
-    .btnbar{display:flex;gap:12px;flex-wrap:wrap}
-    button{appearance:none;border:none;background:#2b5cff;color:white;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
-    button.secondary{background:#2a3542;color:#e7eaee}
-    button:disabled{background:#1a2a4a;color:#6b7b95;cursor:not-allowed}
-    .req{color:#7fb3ff;font-weight:600}
-    .right{float:right}
     .small{font-size:13px;color:#97a4b3}
     .note{font-size:13px;color:#b8c3d0}
-    .hidden{display:none}
-    .divider{height:1px;background:#263140;margin:20px 0}
     .score{font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums}
+
+    /* Cards & blocks */
+    .card{background:#12151a;border:1px solid #232b36;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 1px 0 rgba(255,255,255,.05),0 12px 32px rgba(0,0,0,.3)}
+    .warn{background:#1a1414;border-color:#402020}
+    .divider{height:1px;background:#263140;margin:20px 0}
+    .hidden{display:none}
+
+    /* Forms */
+    label{display:block;font-weight:600;margin:8px 0 4px}
+    input[type=text],input[type=email],input[type=url],textarea,select{
+      width:100%;padding:12px;border-radius:10px;border:1px solid #2a3542;background:#0f1216;color:#e7eaee;
+      font-size:16px; /* prevents zoom on mobile */
+    }
+    textarea{min-height:120px}
+    input[type=checkbox], input[type=radio]{
+      inline-size:1rem; block-size:1rem; accent-color:#2b5cff
+    }
+
+    /* Layout helpers */
+    .grid{display:grid;gap:12px}
+    /* 1 col by default; 2 cols from 720px */
+    .grid-cols-2{grid-template-columns:1fr}
+    @media(min-width:720px){.grid-cols-2{grid-template-columns:1fr 1fr}}
+
+    .row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+
+    /* Buttons bar */
+    .btnbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btnbar .spacer{flex:1 1 auto}
+    button{appearance:none;border:none;background:#2b5cff;color:#fff;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer}
+    button.secondary{background:#2a3542;color:#e7eaee}
+    button:disabled{background:#1a2a4a;color:#6b7b95;cursor:not-allowed}
+
+    /* Utility */
+    .req{color:#7fb3ff;font-weight:600}
+
+    /* Motion preferences */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    }
+
+    /* Safe area on notched devices */
+    body{padding-bottom:env(safe-area-inset-bottom)}
   </style>
 </head>
 <body>
-  <header>
+  <header class="container center">
     <h1>Dialoghi con un’Eco — Team Application</h1>
     <p class="muted">Selective intake for 1–2 pioneers. The format itself is part of the test.</p>
   </header>
 
-  <main>
+  <main class="container">
+    <!-- Profiling explainer -->
+    <section class="card">
+      <h2>How this form works — multidimensional profiling</h2>
+      <p class="small">
+        This is <strong>not</strong> a pass/fail intelligence test, nor a quiz about memorized notions. It’s a
+        <strong>multidimensional profiling</strong> that maps your strengths across three axes:
+      </p>
+      <ul class="small" style="margin:0 0 8px 18px; line-height:1.5">
+        <li><strong>Vision &amp; Artistry</strong> (Creativo): narrative imagination, musical/sonic thinking, unconventional design.</li>
+        <li><strong>Depth &amp; Ethics</strong> (Riflessivo): self‑reflection, safety/ethics awareness, psychological modeling.</li>
+        <li><strong>Breadth &amp; Learning</strong> (Curiosità): curiosity, tooling range, willingness to learn and explore.</li>
+      </ul>
+      <p class="small">We use these three scores to <strong>classify</strong> (not exclude) candidates and match them to roles or study tracks.</p>
+      <div class="small" style="background:#0f1216;border:1px solid #263140;border-radius:12px;padding:10px;white-space:pre-wrap;overflow:auto">
+Candidato A → C90 R70 Q60  → Creative Lead (Vision & Artistry)
+Candidato B → C60 R90 Q70  → Ethics / Systems
+Candidato C → C70 R60 Q90  → Technical R&amp;D
+Candidato D → C40 R40 Q40  → likely not a fit (no strong axis)
+      </div>
+      <p class="small" style="margin-top:8px">Different phases need different mindsets; we look for <strong>complementary talents</strong>, not clones.</p>
+    </section>
+
     <!-- Submits straight to your Formspree endpoint -->
     <form id="eco-form" name="eco-application" method="POST" action="https://formspree.io/f/mdkwyezk">
       <input type="hidden" name="form-name" value="eco-application" />
       <input type="hidden" id="fit_score" name="fit_score" value="0" />
       <input type="hidden" id="fit_breakdown" name="fit_breakdown" value="" />
       <input type="hidden" id="completion_time" name="completion_time" value="0" />
+      <!-- New category scores -->
+      <input type="hidden" id="creative_score" name="creative_score" value="0" />
+      <input type="hidden" id="reflective_score" name="reflective_score" value="0" />
+      <input type="hidden" id="curiosity_score" name="curiosity_score" value="0" />
+      <input type="hidden" id="category_breakdown" name="category_breakdown" value="" />
       <!-- Email helpers for Formspree -->
       <input type="hidden" id="_subject" name="_subject" value="Eco Application — pending score" />
       <input type="hidden" name="_replyto" value="no-reply@dialoghiconuneco" />
@@ -98,7 +163,7 @@
         <label for="q1">1. What does “silence as mechanic” mean to you in a narrative context? <span class="req">(min 200)</span></label>
         <textarea id="q1" name="q1" minlength="200" required placeholder="Talk about tension, agency, rhythm, metanarrative timing, etc."></textarea>
 
-        <label class="block">2. Why use an agentic AI instead of scripted dialogue? (check all that apply)</label>
+        <label>2. Why use an agentic AI instead of scripted dialogue? (check all that apply)</label>
         <div class="grid grid-cols-2">
           <label class="row"><input type="checkbox" name="q2[]" value="narrative_emergence"> Narrative emergence</label>
           <label class="row"><input type="checkbox" name="q2[]" value="player_adaptation"> Player adaptation</label>
@@ -106,7 +171,6 @@
           <label class="row"><input type="checkbox" name="q2[]" value="other"> Other</label>
         </div>
 
-        <!-- Q3 replaced with Likert -->
         <div class="card" style="margin-top:12px">
           <h3>3. How relevant should a <em>traditional gameplay loop</em> be for this project?</h3>
           <p class="small">Lower is better for alignment (we prioritize non-traditional loops).</p>
@@ -133,7 +197,6 @@
 
       <div class="divider"></div>
 
-      <!-- NEW: Core AI concepts (quick check) -->
       <section class="card">
         <h2>2b) Core AI concepts (quick check)</h2>
 
@@ -162,6 +225,59 @@
         <textarea id="thinking_def" name="thinking_def" placeholder="E.g., deliberate reasoning traces/steps used to plan before answering…"></textarea>
 
         <p class="small" style="margin-top:6px">Note: these answers do not affect your fit score (for now); they help us tailor the interview.</p>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- NEW Section 6: Technical & Conceptual Knowledge -->
+      <section class="card">
+        <h2>6) Technical & Conceptual Knowledge</h2>
+        <p class="small">These questions assess your understanding of AI, development tools, and creative reasoning. Answer honestly — this section is not graded, it helps evaluate alignment.</p>
+
+        <h3>9. Types of Artificial Intelligence by Capability Level</h3>
+        <p class="note">Briefly describe the three levels: Weak (Narrow) AI, Strong (General) AI, and Super AI.</p>
+        <textarea name="ai_capability_types" id="ai_capability_types" placeholder="E.g., Narrow AI performs specific tasks; General AI can reason like a human; Super AI would surpass human intelligence..."></textarea>
+
+        <h3>10. What is Jupyter?</h3>
+        <p class="note">Explain what Jupyter is used for and how it helps in data science or AI research.</p>
+        <textarea name="jupyter_explained" id="jupyter_explained" placeholder="E.g., Jupyter Notebook is an interactive environment for Python code, data visualization, and documentation..."></textarea>
+
+        <h3>11. Machine Learning paradigms</h3>
+        <p class="note">List and briefly explain the three main ML paradigms: Supervised, Unsupervised, and Reinforcement Learning.</p>
+        <textarea name="ml_paradigms" id="ml_paradigms" placeholder="E.g., Supervised uses labeled data, Unsupervised finds patterns, Reinforcement learns from rewards and penalties..."></textarea>
+
+        <h3>12. What is Natural Language Processing (NLP)?</h3>
+        <p class="note">Define NLP and describe one example of its application.</p>
+        <textarea name="nlp_definition" id="nlp_definition" placeholder="E.g., NLP is a branch of AI that allows computers to understand and generate human language, like chatbots or translation systems..."></textarea>
+
+        <h3>13. What is an IP address?</h3>
+        <p class="note">Explain in your own words what an IP address is and its purpose in networking.</p>
+        <textarea name="ip_definition" id="ip_definition" placeholder="E.g., an IP address is a unique numeric identifier assigned to devices on a network to locate and communicate..."></textarea>
+
+        <h3>14. Can you work from the terminal or command line?</h3>
+        <p class="note">Describe your familiarity with shells (Bash, PowerShell, etc.) and explain what the <code>ls</code> command does.</p>
+        <textarea name="terminal_experience" id="terminal_experience" placeholder="E.g., yes, I use Bash and PowerShell; 'ls' lists files and directories in the current path..."></textarea>
+
+        <h3>15. Explain what Binaural Audio is.</h3>
+        <p class="note">Describe how binaural audio works and why it is used in immersive experiences.</p>
+        <textarea name="binaural_audio" id="binaural_audio" placeholder="E.g., Binaural audio uses two microphones or virtual spatial simulation to reproduce 3D sound perception through headphones..."></textarea>
+
+        <h3>16. Creative reasoning — composing a dystopian theme</h3>
+        <p class="note">How would you structure the musical theme of a video game set in a dystopian future, with a sensitive protagonist and strong moral core?</p>
+        <textarea name="dystopian_theme" id="dystopian_theme" placeholder="Describe atmosphere, instrumentation, pacing, emotional tone, and how sound reflects narrative conflict..."></textarea>
+
+        <h3>17. Archetypal structure — the Jungian triad</h3>
+        <p class="note">
+          Carl Gustav Jung’s analytical psychology describes the mind as a dynamic system composed of the <strong>Ego</strong> (the “I” or center of consciousness),
+          the <strong>Consciousness</strong> (the field of awareness where the Ego operates), and deeper autonomous structures within the <strong>Unconscious</strong>,
+          such as archetypes (Shadow, Anima/Animus) and the Self (totality striving for unity).
+        </p>
+        <p class="note">
+          In this project, we sometimes reinterpret this model through the triad <strong>IO – COSCIENZA – ENTITÀ</strong>.
+          Imagine you are designing your own narrative or interactive world: how would you structure its psychological architecture following Jung’s theory?
+          How would you define or manifest your equivalent of IO, COSCIENZA, and ENTITÀ — or would you choose a different triadic model entirely?
+        </p>
+        <textarea name="jungian_structure" id="jungian_structure" placeholder="Describe how you would reinterpret Jung’s model in your narrative — e.g., Ego as the player, Consciousness as the system layer, Entity as an autonomous Self observing everything..."></textarea>
       </section>
 
       <div class="divider"></div>
@@ -224,10 +340,9 @@
       <div class="btnbar">
         <button type="button" class="secondary" id="previewBtn">Preview score</button>
         <button type="submit" id="submitBtn">Submit application</button>
-        <span class="small right">The score is an indicator; final decisions are discretionary.</span>
+        <span class="small spacer"></span>
+        <span id="scoreOut" class="small score"></span>
       </div>
-
-      <p id="scoreOut" class="small score"></p>
     </form>
 
     <section class="card">
@@ -246,16 +361,37 @@
       return concepts.reduce((acc,c)=> acc + (t.includes(c)?1:0), 0);
     }
 
+    function passFreeText(text, minLen, keywords){
+      const lenOK = (text||"").trim().length >= (minLen||0);
+      const hits = containsConcepts(text, keywords||[]);
+      return (lenOK && hits >= Math.max(1, Math.ceil((keywords||[]).length * 0.15))); // at least 15% of keywords
+    }
+
     function calcScore(){
-      const q1 = document.getElementById('q1').value || "";
-      const q4 = document.getElementById('q4').value || "";
-      const q5 = document.getElementById('q5').value || "";
-      const q6_extra = document.getElementById('q6_extra').value || "";
+      const get = id => (document.getElementById(id)?.value||"");
+
+      // Base questions used previously
+      const q1 = get('q1');
+      const q4 = get('q4');
+      const q5 = get('q5');
+      const q6_extra = get('q6_extra');
       const q3Likert = Number((document.querySelector('input[name="q3_likert"]:checked')||{}).value || 0);
+
+      // New section 6 fields
+      const ai_capability_types = get('ai_capability_types');
+      const jupyter_explained = get('jupyter_explained');
+      const ml_paradigms = get('ml_paradigms');
+      const nlp_definition = get('nlp_definition');
+      const ip_definition = get('ip_definition');
+      const terminal_experience = get('terminal_experience');
+      const binaural_audio = get('binaural_audio');
+      const dystopian_theme = get('dystopian_theme');
+      const jungian_structure = get('jungian_structure');
 
       let score = 0; 
       let breakdown = [];
 
+      // ---- Original fit scoring (0..100) ----
       // Vision (Q1) — up to 25
       const conceptHits = containsConcepts(q1,["tension","agency","rhythm","tempo","metanarrative","silence"]);
       if (q1.trim().length >= 200) {
@@ -264,30 +400,66 @@
       }
 
       // Vision (Q3 Likert) — prefer low relevance for traditional loop
-      // 1->+25, 2->+20, 3->+12, 4->+8, 5->+5
       const likertMap = {1:25, 2:20, 3:12, 4:8, 5:5};
       const s3 = likertMap[q3Likert] || 0;
       score += s3; breakdown.push(`Vision Q3 (Likert): +${s3}`);
 
       // Systems thinking (Q4/Q5) — up to 30 (15+15)
-      const q4hits = containsConcepts(q4,["buffer","ema","hysteresis","summary","token","privacy","retention","consistency","rate","cooldown","safety"]);
-      const s4 = Math.min(15, 6 + q4hits);
+      const s4 = Math.min(15, 6 + containsConcepts(q4,["buffer","ema","hysteresis","summary","token","privacy","retention","consistency","rate","cooldown","safety"]));
       score += s4; breakdown.push(`Tech Q4: +${s4}`);
 
-      const q5hits = containsConcepts(q5,["sandbox","fallback","safe","permission","os","dpi","resolution","threat","abuse","mitigation","logging"]);
-      const s5 = Math.min(15, 6 + q5hits);
+      const s5 = Math.min(15, 6 + containsConcepts(q5,["sandbox","fallback","safe","permission","os","dpi","resolution","threat","abuse","mitigation","logging"]));
       score += s5; breakdown.push(`Tech Q5: +${s5}`);
 
       // Ethics (Q6 extra) — up to 20
-      const eHits = containsConcepts(q6_extra,["consent","opt-out","support","escalation","trigger","responsible","ethics","gdpr"]);
-      const s6 = Math.min(20, 8 + eHits);
+      const s6 = Math.min(20, 8 + containsConcepts(q6_extra,["consent","opt-out","support","escalation","trigger","responsible","ethics","gdpr"]));
       score += s6; breakdown.push(`Ethics Q6: +${s6}`);
 
-      return { score: Math.round(score), breakdown: breakdown.join(' | ') };
+      score = Math.round(score);
+
+      // ---- Category scoring (Creative / Reflective / Curiosity) 0..100 each ----
+      // Define checks as booleans that mark a positive outcome
+      const creativeChecks = [
+        passFreeText(dystopian_theme, 120, ["leitmotif","theme","variation","texture","instrument","strings","synth","piano","tempo","minor","dissonance","diegetic","ambient","arc","rhythm","orchestration","motif"]),
+        passFreeText(binaural_audio, 80, ["binaural","hrtf","interaural","phase","3d","spatial","head","dummy","headphones","localization","elevation"]),
+        passFreeText(q1, 200, ["tension","agency","rhythm","tempo","metanarrative","silence"]) // vision creativity
+      ];
+
+      const reflectiveChecks = [
+        passFreeText(jungian_structure, 120, ["ego","consciousness","self","shadow","anima","animus","archetype","triad","integration","individuation","entity"]),
+        passFreeText(q6_extra, 40, ["consent","opt-out","safety","escalation","boundaries","ethics","psychological","wellbeing"]),
+        passFreeText(q4, 100, ["memory","buffer","summary","limits","retention","safety","policy","consistency"]) // reflective systems thinking
+      ];
+
+      const curiosityChecks = [
+        passFreeText(ai_capability_types, 60, ["narrow","general","super","agi","weak","strong"]),
+        passFreeText(jupyter_explained, 40, ["notebook","interactive","python","visualization","documentation","kernel"]),
+        passFreeText(ml_paradigms, 50, ["supervised","unsupervised","reinforcement","labels","clusters","reward"]),
+        passFreeText(nlp_definition, 40, ["language","text","understand","generate","chatbot","translation","token"]),
+        passFreeText(ip_definition, 30, ["address","network","identify","route","packet","ipv4","ipv6"]),
+        passFreeText(terminal_experience, 20, ["bash","powershell","zsh","shell","ls","directory","path"]) 
+      ];
+
+      function pct(arr){
+        const ok = arr.filter(Boolean).length;
+        return Math.round((ok / arr.length) * 100);
+      }
+
+      const creative = pct(creativeChecks);
+      const reflective = pct(reflectiveChecks);
+      const curiosity = pct(curiosityChecks);
+
+      // Expose in hidden fields
+      document.getElementById('creative_score').value = String(creative);
+      document.getElementById('reflective_score').value = String(reflective);
+      document.getElementById('curiosity_score').value = String(curiosity);
+      document.getElementById('category_breakdown').value = `Creative ${creative} | Reflective ${reflective} | Curiosity ${curiosity}`;
+
+      return { score, breakdown: breakdown.join(' | '), creative, reflective, curiosity };
     }
 
     function updateHidden(){
-      const {score, breakdown} = calcScore();
+      const {score, breakdown, creative, reflective, curiosity} = calcScore();
       document.getElementById('fit_score').value = String(score);
       document.getElementById('fit_breakdown').value = breakdown;
 
@@ -295,20 +467,20 @@
       const completionTime = Math.round((Date.now() - startTime) / 1000);
       document.getElementById('completion_time').value = completionTime;
 
-      return {score, breakdown, completionTime};
+      return {score, breakdown, completionTime, creative, reflective, curiosity};
     }
 
     // ---- UI events ----
     document.getElementById('previewBtn').addEventListener('click', function(){
-      const {score, breakdown, completionTime} = updateHidden();
+      const {score, breakdown, completion_time, creative, reflective, curiosity} = updateHidden();
       document.getElementById('scoreOut').textContent =
-        `Estimated fit: ${score}/100 — ${breakdown} — Time: ${completionTime}s`;
+        `Estimated fit: ${score}/100 — Vision & Artistry: ${creative}% | Depth & Ethics: ${reflective}% | Breadth & Learning: ${curiosity}% — ${document.getElementById('fit_breakdown').value}`;
     });
 
     document.getElementById('eco-form').addEventListener('submit', function(){
-      const {score} = updateHidden();
+      const {score, creative, reflective, curiosity} = updateHidden();
       const name = (document.querySelector('input[name="full_name"]').value || 'Candidate').trim();
-      document.getElementById('_subject').value = `Eco Application — ${name} — score ${score}`;
+      document.getElementById('_subject').value = `Eco Application — ${name} — score ${score} — C:${creative}% R:${reflective}% Q:${curiosity}%`;
       // UX nicety
       const btn = document.getElementById('submitBtn');
       btn.disabled = true; btn.textContent = 'Submitting...';
@@ -328,4 +500,3 @@
   </script>
 </body>
 </html>
-
