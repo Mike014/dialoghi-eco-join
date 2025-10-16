@@ -270,7 +270,7 @@
       <input type="hidden" name="form-name" value="eco-application" />
       <input type="hidden" id="fit_score" name="fit_score" value="0" />
       <input type="hidden" id="fit_breakdown" name="fit_breakdown" value="" />
-      <input type="hidden" id="completion_time" name="completion_time" value="0" />
+      <!-- <input type="hidden" id="completion_time" name="completion_time" value="0" /> -->
       <!-- New category scores -->
       <input type="hidden" id="creative_score" name="creative_score" value="0" />
       <input type="hidden" id="reflective_score" name="reflective_score" value="0" />
@@ -676,15 +676,15 @@
       document.getElementById('fit_breakdown').value = breakdown;
 
       // Update completion time
-      const completionTime = Math.round((Date.now() - startTime) / 1000);
-      document.getElementById('completion_time').value = completionTime;
+      // const completionTime = Math.round((Date.now() - startTime) / 1000);
+      // document.getElementById('completion_time').value = completionTime;
 
-      return { score, breakdown, completionTime, creative, reflective, curiosity };
+      return { score, breakdown, creative, reflective, curiosity };
     }
 
     // ---- UI events ----
     document.getElementById('previewBtn').addEventListener('click', function () {
-      const { score, breakdown, completion_time, creative, reflective, curiosity } = updateHidden();
+      const { score, breakdown, creative, reflective, curiosity } = updateHidden();
       document.getElementById('scoreOut').textContent =
         `Estimated fit: ${score}/100 — Vision & Artistry: ${creative}% | Depth & Ethics: ${reflective}% | Breadth & Learning: ${curiosity}% — ${document.getElementById('fit_breakdown').value}`;
     });
