@@ -261,16 +261,16 @@
         Candidato D → C40 R40 Q40 → likely not a fit (no strong axis)
       </div>
       <p class="small" style="margin-top:8px">Different phases need different mindsets; we look for
-        <strong>complementary talents</strong>, not clones.
-      </p>
+        <strong>complementary talents</strong>, not clones.</p>
     </section>
 
     <!-- Submits straight to your Formspree endpoint -->
-    <form id="eco-form" name="eco-application" method="POST" action="https://formspree.io/f/mdkwyezk" accept-charset="UTF-8">
+    <form id="eco-form" name="eco-application" method="POST" action="https://formspree.io/f/mdkwyezk"
+      accept-charset="UTF-8">
       <input type="hidden" name="form-name" value="eco-application" />
       <input type="hidden" id="fit_score" name="fit_score" value="0" />
       <input type="hidden" id="fit_breakdown" name="fit_breakdown" value="" />
-      <!-- <input type="hidden" id="completion_time" name="completion_time" value="0" /> -->
+      <input type="hidden" id="completion_time" name="completion_time" value="0" />
       <!-- New category scores -->
       <input type="hidden" id="creative_score" name="creative_score" value="0" />
       <input type="hidden" id="reflective_score" name="reflective_score" value="0" />
@@ -436,8 +436,7 @@
 
         <h3>14. Can you work from the terminal or command line?</h3>
         <p class="note">Describe your familiarity with shells (Bash, PowerShell, etc.) and explain what the
-          <code>ls</code> command does.
-        </p>
+          <code>ls</code> command does.</p>
         <textarea name="terminal_experience" id="terminal_experience"
           placeholder="E.g., yes, I use Bash and PowerShell; 'ls' lists files and directories in the current path..."></textarea>
 
@@ -500,6 +499,9 @@
           <label class="row"><input type="checkbox" name="role[]" value="game_audio"> Game Audio / Sound</label>
           <label class="row"><input type="checkbox" name="role[]" value="ops_security"> Ops / Build / Security</label>
           <label class="row"><input type="checkbox" name="role[]" value="art_direction"> Art / UX Direction</label>
+          <label class="row"><input type="checkbox" name="role[]" value="game_designer"> Game Designer</label>
+          <label class="row"><input type="checkbox" name="role[]" value="level_designer"> Level Designer</label>
+          <label class="row"><input type="checkbox" name="role[]" value="frontend_dev"> Front-end Developer</label>
         </div>
         <label for="availability">Availability (hours/week, timezone, constraints)</label>
         <input id="availability" name="availability" type="text"
@@ -512,8 +514,7 @@
               focused workday per week</strong> (or similar). That day is paid a small stipend (for example
             <strong>€10–€20 per agreed workday</strong>), adjusted case-by-case and subject to mutual agreement. Scope
             must stay aligned with the project’s priorities and study plan. As resources grow, rates can be revised.
-            Payment method and schedule are defined directly with Michele after passing the form and a short call.
-          </p>
+            Payment method and schedule are defined directly with Michele after passing the form and a short call.</p>
           <label class="row"><input type="checkbox" name="comp_ack" required> I understand and accept the compensation
             policy described above.</label>
         </div>
@@ -539,8 +540,7 @@
         <h2>IP, License & Copyright</h2>
         <p class="small">The project is <strong>proprietary</strong> and protected by <strong>Copyright</strong> and a
           <strong>License</strong> as described in the repository README. No public forks, leaks, or derivative works
-          without written permission. You may be asked to sign an NDA.
-        </p>
+          without written permission. You may be asked to sign an NDA.</p>
         <label class="row"><input type="checkbox" name="nda_ready" value="yes"> I am willing to sign an NDA if
           requested.</label>
       </section>
@@ -676,10 +676,10 @@
       document.getElementById('fit_breakdown').value = breakdown;
 
       // Update completion time
-      // const completionTime = Math.round((Date.now() - startTime) / 1000);
-      // document.getElementById('completion_time').value = completionTime;
+      const completionTime = Math.round((Date.now() - startTime) / 1000);
+      document.getElementById('completion_time').value = completionTime;
 
-      return { score, breakdown, creative, reflective, curiosity };
+      return { score, breakdown, completionTime, creative, reflective, curiosity };
     }
 
     // ---- UI events ----
